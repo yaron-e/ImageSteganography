@@ -49,9 +49,8 @@ public class Main {
 		FileOutputStream fos = new FileOutputStream(f, false);
 		int read = 0;		
 		int msgSize = msgB.length;
-		
 		for (int i = 0;(read = fis.read()) != -1; i++) {
-			if (i < msgSize*8 && i > 8) {
+			if (i < msgSize*8 + 107 && i > 107) {
 				int x = getByteFromMsg(msgB, i,read);
 				fos.write(x);
 				System.out.print(read + " " + x);
@@ -70,9 +69,9 @@ public class Main {
 	}
 	
 	public static int getByteFromMsg(byte [] msg, int i, int image) {
-		 byte b = msg[i/8];
+		 byte b = msg[(i-107)/8];
 		 int msb = ((b & 0xFF) >> 7) & 0x1;
-		 msg[i/8] = (byte) (b << 1);
+		 msg[(i-107)/8] = (byte) (b << 1);
 		 
 		 image = (((image & 0x1) & 0) | msb ) | (image & 0xFE);
 		 
